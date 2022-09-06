@@ -1,0 +1,13 @@
+.App {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  color: white;
+}
+
+.general-content {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+}
+
+
+

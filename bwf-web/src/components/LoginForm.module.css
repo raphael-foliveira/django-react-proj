@@ -1,0 +1,12 @@
+.mt_2 {
+    margin-top: 2rem;
+}
+
+.mb_2 {
+    margin-bottom: 2rem;
+}
+
+.button_spacing {
+    display: flex;
+    justify-content: space-between;
+}
