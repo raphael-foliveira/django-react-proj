@@ -51,7 +51,11 @@ class CustomObtainAuthToken(ObtainAuthToken):
 class RegisterNewUser(views.APIView):
     
     def post(self, request):
-        print(request.data)
+        existing_user = User.objects.filter(username=request.data.get('newUserName')).exists()
+        if existing_user:
+            return Response({
+                'message': 'There is already an user with this username.'
+            })
         new_user = User.objects.create_user(
             username = request.data.get('newUserName'),
             password = request.data.get('newPassword'),
@@ -65,5 +69,6 @@ class RegisterNewUser(views.APIView):
         )
         user_profile_serializer = UserProfileSerializer(new_user_profile)
         return Response({
-            'new_user_profile': user_profile_serializer.data
+            'new_user_profile': user_profile_serializer.data,
+            'message': 'User created successfully!'
         })

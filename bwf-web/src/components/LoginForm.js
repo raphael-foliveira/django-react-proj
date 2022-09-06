@@ -42,6 +42,7 @@ function LoginForm(props) {
                     </InputAdornment>
                 }
                 onChange={(event) => setUserName(event.target.value)}
+                autoComplete="username"
             />
 
             <InputLabel htmlFor="password" className={`${classes.mt_2}`}>
@@ -57,7 +58,7 @@ function LoginForm(props) {
                     </InputAdornment>
                 }
                 onChange={(event) => setPassword(event.target.value)}
-                InputLabel="Something"
+                autoComplete="current-password"
             />
             <div className={classes.button_spacing}>
                 <Button color="primary" variant="contained" type="submit">

@@ -1,18 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Input, Button, InputLabel, InputAdornment, TextField, Grid } from "@mui/material";
-import { AccountCircle, Key } from "@mui/icons-material";
+import React, { useState } from "react";
+import { Button, TextField, Grid } from "@mui/material";
 import classes from "./RegisterForm.module.css";
 import { registerNewUser } from "../services/user-services";
-import styled from "styled-components";
-
-const Centralized = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
-const GridMarginTop = styled(Grid)`
-    margin-top: 20px;
-`;
 
 function RegisterForm(props) {
     const [firstName, setFirstName] = useState("");
@@ -22,28 +11,33 @@ function RegisterForm(props) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (newPassword != confirmPassword) {
+        if (newPassword !== confirmPassword) {
             setErrors("Passwords do not match!");
             return;
         }
+        if (!email.includes("@")) {
+            setErrors("Please enter a valid e-mail!");
+            return;
+        }
+        setErrors("");
         const newUserData = {
             firstName,
             lastName,
             newUserName,
             newPassword,
-            email
+            email,
         };
-        registerNewUser(newUserData).then((data) => console.log(data));
+        registerNewUser(newUserData).then((data) => setMessage(data.message));
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <GridMarginTop container spacing={0}>
-                
-                <Grid xs={12} md={6}>
+            <Grid container rowSpacing={4} marginLeft={4}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         id="firstName"
                         onChange={(event) => setFirstName(event.target.value)}
@@ -52,7 +46,7 @@ function RegisterForm(props) {
                     />
                 </Grid>
 
-                <Grid xs={12} md={6}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         id="lastName"
                         onChange={(event) => setLastName(event.target.value)}
@@ -61,21 +55,16 @@ function RegisterForm(props) {
                     />
                 </Grid>
 
-                <Grid xs={12} md={6}>
-                    <InputLabel htmlFor="newUsername">Username</InputLabel>
-                    <Input
+                <Grid item xs={12} md={6}>
+                    <TextField
                         id="newUsername"
                         onChange={(event) => setNewUserName(event.target.value)}
-                        startAdornment={
-                            <InputAdornment>
-                                <AccountCircle />
-                            </InputAdornment>
-                        }
                         className={classes.registerFormInput}
+                        label="User Name"
                     />
                 </Grid>
 
-                <Grid xs={12} md={6}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         id="email"
                         label="e-mail"
@@ -85,49 +74,43 @@ function RegisterForm(props) {
                     />
                 </Grid>
 
-                <Grid xs={12} md={6}>
-                    <InputLabel htmlFor="newPassword">Password</InputLabel>
-                    <Input
+                <Grid item xs={12} md={6}>
+                    <TextField
                         type="password"
                         id="newPassword"
                         onChange={(event) => setNewPassword(event.target.value)}
-                        startAdornment={
-                            <InputAdornment>
-                                <Key />
-                            </InputAdornment>
-                        }
                         className={classes.registerFormInput}
+                        label="Password"
+                        autoComplete="off"
                     />
                 </Grid>
 
-                <Grid xs={12} md={6}>
-                    <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
-                    <Input
+                <Grid item xs={12} md={6}>
+                    <TextField
                         type="password"
                         id="confirmPassword"
                         onChange={(event) => setConfirmPassword(event.target.value)}
-                        startAdornment={
-                            <InputAdornment>
-                                <Key />
-                            </InputAdornment>
-                        }
                         className={classes.registerFormInput}
+                        label="password"
+                        autoComplete="off"
                     />
                 </Grid>
-
-                <Grid xs={12}>
+                { errors && 
+                <Grid item xs={12}>
                     <p>{errors}</p>
                 </Grid>
-
-                <Grid xs={12}>
-                    <Centralized>
-                        <Button type="submit" variant="contained" color="primary">
-                            Submit
-                        </Button>
-                    </Centralized>
+                }
+                { message && 
+                <Grid item xs={12}>
+                    <p>{message}</p>
                 </Grid>
-
-            </GridMarginTop>
+                }
+                <Grid item xs={12} justifyContent="center">
+                    <Button type="submit" variant="contained" color="primary">
+                        Submit
+                    </Button>
+                </Grid>
+            </Grid>
         </form>
     );
 }
