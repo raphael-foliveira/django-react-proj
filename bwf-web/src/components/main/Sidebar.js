@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import classes from "./Sidebar.module.css";
-import {AuthContext} from "../contexts/AuthContext";
-import LoginForm from './LoginForm';
+import {AuthContext} from "../../contexts/AuthContext";
+import LoginForm from '../forms/LoginForm';
 import { Button } from "@mui/material";
+import User from '../account/User';
 
 function Sidebar(props) {
 
@@ -18,8 +19,9 @@ function Sidebar(props) {
             <LoginForm/> 
             :
             <React.Fragment>
-                <p>Welcome {authData.user.username}</p>
-                <Button color="primary" variant="contained" type="button" onClick={handleLogout}>
+
+                <User userName={authData.user.username}/>
+                <Button color="primary" variant="contained" type="button" onClick={handleLogout} style={{padding: "auto"}}>
                     Logout
                 </Button>
             </React.Fragment>

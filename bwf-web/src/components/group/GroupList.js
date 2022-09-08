@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
-import { getGroupsList } from "../services/group-services";
-import useGroupsList from "../hooks/useGroupsList";
+import { getGroupsList } from "../../services/group-services";
+import useGroupsList from "../../hooks/useGroupsList";
 
 function GroupList(props) {
   const [data, loading, error] = useGroupsList() 

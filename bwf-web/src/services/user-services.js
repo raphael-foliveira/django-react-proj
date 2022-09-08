@@ -23,6 +23,23 @@ export function registerNewUser(newUserData) {
     .then(response => response.json());
 }
 
+export function uploadAvatar(profileId, data) {
+    return fetch(`http://localhost:8000/api/userprofiles/${profileId}/`, {
+        method: 'PUT',
+        body: data
+    })
+    .then(response => {
+        console.log(response);
+        response.json()})
+    .catch(error => console.log(error));
+}
+
+export function getUserProfile(profileId) {
+    return fetch(`http://localhost:8000/api/userprofiles/${profileId}/`)
+    .then(response => response.json())
+    .catch(error => console.log(error));
+}
+
 export function getUserFromLocalStorage() {
     return JSON.parse(localStorage.getItem('bwf-user'));
 }

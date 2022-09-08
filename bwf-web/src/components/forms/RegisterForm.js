@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import {useNavigate}  from 'react-router-dom';
 import { Button, TextField, Grid } from "@mui/material";
 import classes from "./RegisterForm.module.css";
-import { registerNewUser } from "../services/user-services";
+import { registerNewUser } from "../../services/user-services";
 
 function RegisterForm(props) {
     const [firstName, setFirstName] = useState("");
@@ -12,6 +13,7 @@ function RegisterForm(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -32,12 +34,16 @@ function RegisterForm(props) {
             email,
         };
         registerNewUser(newUserData).then((data) => setMessage(data.message));
+        navigate("/");
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <Grid container rowSpacing={4} marginLeft={4}>
-                <Grid item xs={12} md={6}>
+            <Grid container spacing={6}>
+                <Grid item xs={12}>
+                    <h1>Register</h1>
+                </Grid>
+                <Grid item>
                     <TextField
                         id="firstName"
                         onChange={(event) => setFirstName(event.target.value)}
@@ -45,17 +51,17 @@ function RegisterForm(props) {
                         label="First Name"
                     />
                 </Grid>
-
-                <Grid item xs={12} md={6}>
+                <Grid item>
                     <TextField
                         id="lastName"
                         onChange={(event) => setLastName(event.target.value)}
                         className={classes.registerFormInput}
                         label="Last Name"
+                        color="primary"
                     />
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item>
                     <TextField
                         id="newUsername"
                         onChange={(event) => setNewUserName(event.target.value)}
@@ -63,8 +69,7 @@ function RegisterForm(props) {
                         label="User Name"
                     />
                 </Grid>
-
-                <Grid item xs={12} md={6}>
+                <Grid item>
                     <TextField
                         id="email"
                         label="e-mail"
@@ -74,7 +79,7 @@ function RegisterForm(props) {
                     />
                 </Grid>
 
-                <Grid item xs={12} md={6}>
+                <Grid item>
                     <TextField
                         type="password"
                         id="newPassword"
@@ -84,8 +89,7 @@ function RegisterForm(props) {
                         autoComplete="off"
                     />
                 </Grid>
-
-                <Grid item xs={12} md={6}>
+                <Grid item>
                     <TextField
                         type="password"
                         id="confirmPassword"
@@ -95,17 +99,10 @@ function RegisterForm(props) {
                         autoComplete="off"
                     />
                 </Grid>
-                { errors && 
+
                 <Grid item xs={12}>
-                    <p>{errors}</p>
-                </Grid>
-                }
-                { message && 
-                <Grid item xs={12}>
-                    <p>{message}</p>
-                </Grid>
-                }
-                <Grid item xs={12} justifyContent="center">
+                    {errors && <p>{errors}</p>}
+                    {message && <p>{message}</p>}
                     <Button type="submit" variant="contained" color="primary">
                         Submit
                     </Button>

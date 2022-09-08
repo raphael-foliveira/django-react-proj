@@ -6,8 +6,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import classes from "./LoginForm.module.css";
 import KeyIcon from "@mui/icons-material/Key";
-import { authorizeUser, getUserFromLocalStorage, setLoggedInUser, setUserToLocalStorage } from "../services/user-services";
-import { AuthContext } from "../contexts/AuthContext";
+import { authorizeUser, getUserFromLocalStorage, setLoggedInUser, setUserToLocalStorage } from "../../services/user-services";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 

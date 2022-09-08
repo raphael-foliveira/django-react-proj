@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import useGroup from "../hooks/useGroup";
+import useGroup from "../../hooks/useGroup";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AlarmIcon from '@mui/icons-material/Alarm';
-import {formatDate, formatTime} from '../services/datetime-services';
+import {formatDate, formatTime} from '../../services/datetime-services';
 
 
 function GroupDetails() {

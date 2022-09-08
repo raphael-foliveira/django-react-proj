@@ -3,17 +3,19 @@ from django.contrib.auth.models import User
 from .models import Group, Event, UserProfile
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ("id", "username", "first_name", "last_name", "profile")
         
         
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ('image', 'bio', 'is_premium')
+        
+        
+class UserSerializer(serializers.ModelSerializer):
+    profile = UserProfileSerializer()
+    class Meta:
+        model = User
+        fields = ("id", "username", "first_name", "last_name", "profile")
 
 
 class EventSerializer(serializers.ModelSerializer):

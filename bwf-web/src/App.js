@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import Main from "./components/Main";
+import Header from "./components/header/Header";
+import Sidebar from "./components/main/Sidebar";
+import Main from "./components/main/Main";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme/theme";
 import { BrowserRouter } from "react-router-dom";

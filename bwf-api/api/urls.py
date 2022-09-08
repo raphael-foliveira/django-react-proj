@@ -14,4 +14,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('authenticate', views.CustomObtainAuthToken.as_view()),
     path('register', views.RegisterNewUser.as_view()),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
