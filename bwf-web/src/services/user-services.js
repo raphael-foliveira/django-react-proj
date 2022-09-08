@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-
 export function authorizeUser(credentials) {
     return fetch('http://localhost:8000/api/authenticate', {
         method: 'POST',
@@ -31,6 +28,20 @@ export function uploadAvatar(profileId, data) {
     .then(response => {
         console.log(response);
         response.json()})
+    .catch(error => console.log(error));
+}
+
+export function updateUserPassword(userId, newPassword) {
+    return fetch(`http://localhost:8000/api/change-password/`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            newPassword: newPassword,
+            userId: userId
+        })
+    }).then(response => response.json())
     .catch(error => console.log(error));
 }
 

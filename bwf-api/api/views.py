@@ -72,3 +72,17 @@ class RegisterNewUser(views.APIView):
             'new_user_profile': user_profile_serializer.data,
             'message': 'User created successfully!'
         })
+        
+
+class ChangeUserPassword(views.APIView):
+    
+    def put(self, request):
+        user_id = request.data.get('userId')
+        user: User = User.objects.get(id=user_id)
+        user.set_password(request.data.get('newPassword'))
+        user.save()
+        user_serializer = UserSerializer(user)
+        return Response({   
+            'updated_user': user_serializer.data,
+            'message': 'Password updated successfuly'
+        })

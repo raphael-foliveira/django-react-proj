@@ -14,4 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('authenticate', views.CustomObtainAuthToken.as_view()),
     path('register', views.RegisterNewUser.as_view()),
+    path('change-password/', views.ChangeUserPassword.as_view())
 ]
