@@ -4,14 +4,9 @@ import { getUserProfile } from '../../services/user-services';
 import styled from '@emotion/styled';
 import { Avatar } from '@mui/material';
 
-const StyledImg = styled.img`
-    max-width: 100%;
-    height: auto;
-`
-
 const LargeAvatar = styled(Avatar)`
-    width: 100%;
-    height: auto;
+    width: 180px;
+    height: 180px;
 `
 
 
@@ -21,7 +16,7 @@ function User(props) {
     const [imageDisplay, setImageDisplay] = useState();
 
     useEffect(() => {
-        getUserProfile(authData.user.profile)
+        getUserProfile(authData.user.id)
         .then(data => setImageDisplay(data.image))
         .catch(error => console.log(error));
     },[]);

@@ -25,9 +25,7 @@ export function uploadAvatar(profileId, data) {
         method: 'PUT',
         body: data
     })
-    .then(response => {
-        console.log(response);
-        response.json()})
+    .then(response => response.json())
     .catch(error => console.log(error));
 }
 

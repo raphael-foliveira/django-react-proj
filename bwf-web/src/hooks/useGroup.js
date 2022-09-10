@@ -7,8 +7,8 @@ function useGroup(groupId) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     
-    const getData = async () => {
-        await getGroup(groupId).then(data => {
+    const getData = () => {
+        getGroup(groupId).then(data => {
             setGroup(data);
             setLoading(false);
         }).catch(error => {

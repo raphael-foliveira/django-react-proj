@@ -2,6 +2,7 @@ import { Button, TextField, Grid } from "@mui/material";
 import React, { useState, useContext } from "react";
 import { uploadAvatar } from "../../services/user-services";
 import { AuthContext } from "../../contexts/AuthContext";
+import {NotificationManager} from "react-notifications";
 
 function UploadAvatarForm(props) {
     const [image, setImage] = useState("");
@@ -11,7 +12,14 @@ function UploadAvatarForm(props) {
         const uploadData = new FormData();
         uploadData.append("image", image, image.name);
         const profileData = await uploadAvatar(authData.user.id, uploadData);
-        window.location.reload();
+        console.log(profileData);
+        if (typeof(profileData) !== "undefined") {
+            NotificationManager.success("Avatar image uploaded successfully!");
+            window.location.reload();
+        } else {
+            NotificationManager.warning("There was an error while uploading the image.");
+        }
+        
     };
 
     return (
