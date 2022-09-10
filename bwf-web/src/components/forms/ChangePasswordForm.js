@@ -4,11 +4,11 @@ import Key from "@mui/icons-material/Key";
 import { AuthContext } from "../../contexts/AuthContext";
 import { updateUserPassword } from "../../services/user-services";
 import { useNavigate } from "react-router-dom";
+import {NotificationManager} from 'react-notifications';
 
 function ChangePasswordForm(props) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
-    const [passwordMatchError, setPasswordMatchError] = useState(false);
     const [authData, setLoggedInUser] = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -22,10 +22,11 @@ function ChangePasswordForm(props) {
     const handleSubmitNewPassword = (event) => {
         event.preventDefault();
         if (newPassword !== confirmNewPassword) {
-            setPasswordMatchError(true);
+            NotificationManager.warning("Passwords do not match")
             return;
         }
         updateUserPassword(authData.user.id, newPassword).then((data) => console.log(data));
+        NotificationManager.success("Password changed successfully")
         navigate("/");
     };
 
@@ -62,7 +63,6 @@ function ChangePasswordForm(props) {
                             Submit
                         </Button>
                     </Grid>
-                    {passwordMatchError && <p>Passwords do not match!</p>}
                 </Grid>
             </form>
         </div>

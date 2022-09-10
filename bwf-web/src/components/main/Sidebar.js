@@ -4,13 +4,19 @@ import {AuthContext} from "../../contexts/AuthContext";
 import LoginForm from '../forms/LoginForm';
 import { Button } from "@mui/material";
 import User from '../account/User';
+import { useNavigate } from "react-router-dom";
 
 function Sidebar(props) {
 
     const [authData, setLoggedInUser] = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         setLoggedInUser(null);
+    }
+
+    const goToMyAccountPage = () => {
+        navigate("/account")
     }
 
     return (
@@ -21,6 +27,9 @@ function Sidebar(props) {
             <React.Fragment>
 
                 <User userName={authData.user.username}/>
+                <Button color="primary" variant="contained" type="button" onClick={goToMyAccountPage} style={{padding: "auto"}}>
+                    My Account
+                </Button>
                 <Button color="primary" variant="contained" type="button" onClick={handleLogout} style={{padding: "auto"}}>
                     Logout
                 </Button>

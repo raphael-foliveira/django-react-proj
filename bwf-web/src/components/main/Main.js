@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import RegisterForm from "../forms/RegisterForm";
 import Account from "../account/Account";
 import ChangePasswordForm from "../forms/ChangePasswordForm";
+import NotificationCard from "../notifications/NotificationCard";
 
 function Main(props) {
     const [authData, setLoggedInUser] = useContext(AuthContext);
@@ -18,7 +19,6 @@ function Main(props) {
                 <Route path="/details/:id" element={<GroupDetails />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/account" element={<Account />} />
-                <Route path="/change-password" element={<ChangePasswordForm />} />
             </Routes>
         </div>
     );

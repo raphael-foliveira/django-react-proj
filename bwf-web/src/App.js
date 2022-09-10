@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer} from 'react-notifications';
 import Header from "./components/header/Header";
 import Sidebar from "./components/main/Sidebar";
 import Main from "./components/main/Main";
@@ -33,6 +35,7 @@ function App() {
                             <Main />
                         </div>
                     </BrowserRouter>
+                    <NotificationContainer />
                 </div>
             </AuthContext.Provider>
         </ThemeProvider>
