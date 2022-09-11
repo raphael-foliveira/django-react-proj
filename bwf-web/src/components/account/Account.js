@@ -1,7 +1,7 @@
 import ChangePasswordForm from "../forms/ChangePasswordForm";
 import UploadAvatarForm from "../forms/UploadAvatarForm";
 
-function Account(props) {
+export default function Account(props) {
     return (
         <div>
             <h1>Account</h1>
@@ -10,5 +10,3 @@ function Account(props) {
         </div>
     );
 }
-
-export default Account;

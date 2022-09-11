@@ -6,7 +6,7 @@ import AlarmIcon from '@mui/icons-material/Alarm';
 import {formatDate, formatTime} from '../../services/datetime-services';
 
 
-function GroupDetails() {
+export default function GroupDetails() {
 
     const { id } = useParams();
     const [data, loading, error] = useGroup(id);
@@ -53,5 +53,3 @@ function GroupDetails() {
         </div>
     );
 }
-
-export default GroupDetails;

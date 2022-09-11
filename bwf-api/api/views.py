@@ -6,17 +6,24 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from .models import Event, Group, UserProfile
 from .serializers import EventSerializer, GroupSerializer, UserSerializer, UserProfileSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowAny]
+    
     class Meta:
         model = UserProfile
         
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     class Meta:
         model = User
 
@@ -24,6 +31,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     class Meta:
         model = Group
     
@@ -31,6 +40,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     class Meta:
         model = Event
         
@@ -75,6 +86,8 @@ class RegisterNewUser(views.APIView):
         
 
 class ChangeUserPassword(views.APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     
     def put(self, request):
         user_id = request.data.get('userId')

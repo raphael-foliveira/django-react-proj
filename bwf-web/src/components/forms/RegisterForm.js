@@ -4,7 +4,7 @@ import { Button, TextField, Grid } from "@mui/material";
 import classes from "./RegisterForm.module.css";
 import { registerNewUser } from "../../services/user-services";
 
-function RegisterForm(props) {
+export default function RegisterForm(props) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -60,7 +60,6 @@ function RegisterForm(props) {
                         color="primary"
                     />
                 </Grid>
-
                 <Grid item>
                     <TextField
                         id="newUsername"
@@ -78,7 +77,6 @@ function RegisterForm(props) {
                         className={classes.registerFormInput}
                     />
                 </Grid>
-
                 <Grid item>
                     <TextField
                         type="password"
@@ -99,7 +97,6 @@ function RegisterForm(props) {
                         autoComplete="off"
                     />
                 </Grid>
-
                 <Grid item xs={12}>
                     {errors && <p>{errors}</p>}
                     {message && <p>{message}</p>}
@@ -112,4 +109,4 @@ function RegisterForm(props) {
     );
 }
 
-export default RegisterForm;
+

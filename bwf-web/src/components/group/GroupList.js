@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getGroupsList } from "../../services/group-services";
 import useGroupsList from "../../hooks/useGroupsList";
 
-function GroupList(props) {
+export default function GroupList(props) {
   const [data, loading, error] = useGroupsList() 
   const [groups, setGroups] = useState(null);
 
@@ -30,5 +30,3 @@ function GroupList(props) {
     </div>
   );
 };
-
-export default GroupList;

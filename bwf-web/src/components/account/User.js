@@ -10,16 +10,16 @@ const LargeAvatar = styled(Avatar)`
 `
 
 
-function User(props) { 
+export default function User(props) { 
 
-    const [authData, setLoggedInUser] = useContext(AuthContext);
+    const [authData] = useContext(AuthContext);
     const [imageDisplay, setImageDisplay] = useState();
 
     useEffect(() => {
         getUserProfile(authData.user.id)
         .then(data => setImageDisplay(data.image))
         .catch(error => console.log(error));
-    },[]);
+    }, []);
 
     return (
         <div>
@@ -29,4 +29,3 @@ function User(props) {
     );
 }
 
-export default User;

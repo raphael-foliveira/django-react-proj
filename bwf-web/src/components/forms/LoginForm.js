@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -6,12 +6,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import classes from "./LoginForm.module.css";
 import KeyIcon from "@mui/icons-material/Key";
-import { authorizeUser, getUserFromLocalStorage, setLoggedInUser, setUserToLocalStorage } from "../../services/user-services";
+import { authorizeUser} from "../../services/user-services";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 
-function LoginForm(props) {
+export default function LoginForm(props) {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [authData, setLoggedInUser] = useContext(AuthContext);
@@ -73,4 +73,4 @@ function LoginForm(props) {
     );
 }
 
-export default LoginForm;
+

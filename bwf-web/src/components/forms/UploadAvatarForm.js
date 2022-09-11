@@ -4,14 +4,15 @@ import { uploadAvatar } from "../../services/user-services";
 import { AuthContext } from "../../contexts/AuthContext";
 import {NotificationManager} from "react-notifications";
 
-function UploadAvatarForm(props) {
+export default function UploadAvatarForm(props) {
     const [image, setImage] = useState("");
-    const [authData, setLoggedInUser] = useContext(AuthContext);
+    const [authData] = useContext(AuthContext);
+
     const uploadFile = async (event) => {
         event.preventDefault();
         const uploadData = new FormData();
         uploadData.append("image", image, image.name);
-        const profileData = await uploadAvatar(authData.user.id, uploadData);
+        const profileData = await uploadAvatar(authData.user.id, uploadData, authData.token);
         console.log(profileData);
         if (typeof(profileData) !== "undefined") {
             NotificationManager.success("Avatar image uploaded successfully!");
@@ -41,4 +42,4 @@ function UploadAvatarForm(props) {
     );
 }
 
-export default UploadAvatarForm;
+

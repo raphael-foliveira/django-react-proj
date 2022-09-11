@@ -20,20 +20,24 @@ export function registerNewUser(newUserData) {
     .then(response => response.json());
 }
 
-export function uploadAvatar(profileId, data) {
+export function uploadAvatar(profileId, data, token) {
     return fetch(`http://localhost:8000/api/userprofiles/${profileId}/`, {
         method: 'PUT',
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
         body: data
     })
     .then(response => response.json())
     .catch(error => console.log(error));
 }
 
-export function updateUserPassword(userId, newPassword) {
+export function updateUserPassword(userId, newPassword, token) {
     return fetch(`http://localhost:8000/api/change-password/`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
         },
         body: JSON.stringify({
             newPassword: newPassword,

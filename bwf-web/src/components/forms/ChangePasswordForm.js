@@ -6,10 +6,10 @@ import { updateUserPassword } from "../../services/user-services";
 import { useNavigate } from "react-router-dom";
 import {NotificationManager} from 'react-notifications';
 
-function ChangePasswordForm(props) {
+export default function ChangePasswordForm(props) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
-    const [authData, setLoggedInUser] = useContext(AuthContext);
+    const [authData] = useContext(AuthContext);
     const navigate = useNavigate();
 
     const updateNewPassword = (event) => {
@@ -25,7 +25,7 @@ function ChangePasswordForm(props) {
             NotificationManager.warning("Passwords do not match")
             return;
         }
-        updateUserPassword(authData.user.id, newPassword).then((data) => console.log(data));
+        updateUserPassword(authData.user.id, newPassword, authData.token).then((data) => console.log(data));
         NotificationManager.success("Password changed successfully")
         navigate("/");
     };
@@ -69,4 +69,4 @@ function ChangePasswordForm(props) {
     );
 }
 
-export default ChangePasswordForm;
+

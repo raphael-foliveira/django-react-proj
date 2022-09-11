@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import User from '../account/User';
 import { useNavigate } from "react-router-dom";
 
-function Sidebar(props) {
+export default function Sidebar(props) {
 
     const [authData, setLoggedInUser] = useContext(AuthContext);
     const navigate = useNavigate();
@@ -39,5 +39,3 @@ function Sidebar(props) {
     );
     
 }
-
-export default Sidebar;
