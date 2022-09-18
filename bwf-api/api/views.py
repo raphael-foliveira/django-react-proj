@@ -4,8 +4,8 @@ from rest_framework import viewsets, views
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from .models import Event, Group, UserProfile
-from .serializers import EventSerializer, GroupSerializer, UserSerializer, UserProfileSerializer
+from .models import Event, Group, Member, UserProfile
+from .serializers import EventSerializer, GroupFullSerializer, GroupSerializer, UserSerializer, UserProfileSerializer, MemberSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
@@ -35,6 +35,24 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     class Meta:
         model = Group
+        
+
+class GroupFullViewSet(viewsets.ViewSet):
+    
+    def list(self, request):
+        groups = Group.objects.all()
+        members_of_groups = Member.objects.all()
+        serializer = GroupFullSerializer(groups, many=True)
+        return Response(serializer.data)
+                        
+    def retrieve(self, request, pk=None):
+        group = Group.objects.get(pk=pk)
+        members = group.members.all()
+        group_serializer = GroupFullSerializer(group)
+        return Response(group_serializer.data)
+    
+    def create(self, request):
+        return Response(None)
     
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -44,6 +62,15 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     class Meta:
         model = Event
+        
+
+class MemberViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    class Meta:
+        model = Member
         
 
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -99,3 +126,25 @@ class ChangeUserPassword(views.APIView):
             'updated_user': user_serializer.data,
             'message': 'Password updated successfuly'
         })
+        
+        
+class UserJoinGroup(views.APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    
+    def post(self, request):
+        user_id: int = request.data.get('userId')
+        group_id: int = request.data.get('groupId')
+        user: User = User.objects.get(id=user_id)
+        group: Group = Group.objects.get(id=group_id)
+        new_relationship = Member.objects.create(
+            user=user,
+            group=group
+        )
+        user_serializer: UserSerializer = UserSerializer(user)
+        group_serializer: GroupFullSerializer = GroupFullSerializer(group)
+        return Response({
+            'user': user_serializer.data,
+            'group': group_serializer.data
+        })
+        

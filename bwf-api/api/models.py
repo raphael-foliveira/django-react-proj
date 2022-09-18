@@ -7,7 +7,7 @@ def upload_path_handler(instance, filename):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name="profile", primary_key=True, on_delete=models.CASCADE)
+    user: User = models.OneToOneField(User, related_name="profile", primary_key=True, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_path_handler, blank=True)
     is_premium = models.BooleanField(default=False)
     bio = models.CharField(max_length=255, blank=True, null=True)
@@ -29,3 +29,12 @@ class Event(models.Model):
     score_2 = models.IntegerField(default=0)
     time = models.DateTimeField()
     group = models.ForeignKey(Group, related_name='events', on_delete=models.CASCADE)
+    
+
+class Member(models.Model):
+    group = models.ForeignKey(Group, related_name='members', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='bet_groups', on_delete=models.CASCADE)
+    admin = models.BooleanField(default=False)
+    
+    class Meta:
+        unique_together = (('user', 'group'))
