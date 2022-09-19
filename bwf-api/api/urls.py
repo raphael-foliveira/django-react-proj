@@ -15,5 +15,6 @@ urlpatterns = [
     path('authenticate', views.CustomObtainAuthToken.as_view()),
     path('register', views.RegisterNewUser.as_view()),
     path('change-password', views.ChangeUserPassword.as_view()),
-    path('join', views.UserJoinGroup.as_view())
+    path('join', views.UserJoinGroup.as_view()),
+    path('leave', views.userLeavegroup.as_view())
 ]

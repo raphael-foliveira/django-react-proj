@@ -8,6 +8,7 @@ from .models import Event, Group, Member, UserProfile
 from .serializers import EventSerializer, GroupFullSerializer, GroupSerializer, UserSerializer, UserProfileSerializer, MemberSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from django.db.models import Q
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -22,8 +23,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     class Meta:
         model = User
 
@@ -137,7 +138,7 @@ class UserJoinGroup(views.APIView):
         group_id: int = request.data.get('groupId')
         user: User = User.objects.get(id=user_id)
         group: Group = Group.objects.get(id=group_id)
-        new_relationship = Member.objects.create(
+        Member.objects.create(
             user=user,
             group=group
         )
@@ -146,5 +147,20 @@ class UserJoinGroup(views.APIView):
         return Response({
             'user': user_serializer.data,
             'group': group_serializer.data
+        })
+        
+class userLeavegroup(views.APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    
+    def post(self, request):
+        user_id: int = request.data.get('userId')
+        group_id: int = request.data.get('groupId')
+        user: User = User.objects.get(id=user_id)
+        group: Group = Group.objects.get(id=group_id)
+        relationship: Member = Member.objects.get(Q(user=user), Q(group=group))
+        relationship.delete()
+        return Response({
+            'message': f'{user.username} has left {group.name}'
         })
         
