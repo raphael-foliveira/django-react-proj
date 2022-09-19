@@ -39,7 +39,7 @@ export default function RegisterForm(props) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Grid container spacing={6}>
+            <Grid container spacing={6} maxWidth={"800px"}>
                 <Grid item xs={12}>
                     <h1>Register</h1>
                 </Grid>
@@ -93,7 +93,7 @@ export default function RegisterForm(props) {
                         id="confirmPassword"
                         onChange={(event) => setConfirmPassword(event.target.value)}
                         className={classes.registerFormInput}
-                        label="password"
+                        label="Confirm Password"
                         autoComplete="off"
                     />
                 </Grid>

@@ -11,10 +11,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 
+
 export default function LoginForm(props) {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [authData, setLoggedInUser] = useContext(AuthContext);
+    const [authData, setAuthData] = useContext(AuthContext);
     const [errors, setErrors] = useState(null);
 
     const handleSubmit = async (event) => {
@@ -26,7 +27,7 @@ export default function LoginForm(props) {
             if (!("token" in data)) {
                 setErrors("Invalid credentials");
             } else {
-                setLoggedInUser(data);
+                setAuthData(data);
             }
         });
     };

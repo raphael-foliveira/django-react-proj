@@ -1,7 +1,7 @@
 
 
 export async function getGroup(id){
-    return fetch(`http://localhost:8000/api/groups/${id}`)
+    return fetch(`http://localhost:8000/api/groups_detailed/${id}`)
         .then(response => response.json());
 };
 

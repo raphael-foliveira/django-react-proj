@@ -7,8 +7,7 @@ export default function GroupList(props) {
   const [data, loading, error] = useGroupsList() 
   const [groups, setGroups] = useState(null);
 
-  useEffect(
-    () => {
+  useEffect(() => {
       setGroups(data)
     }, [data]);
   
