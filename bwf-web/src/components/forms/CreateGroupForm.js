@@ -25,15 +25,12 @@ export default function CreateGroupForm(props) {
     };
 
     const changeGroupName = (event) => {
-        setErrorMessages([]);
         setNewGroupName(event.target.value);
     };
     const changeGroupLocation = (event) => {
-        setErrorMessages([]);
         setNewGroupLocation(event.target.value);
     };
     const changeGroupDescription = (event) => {
-        setErrorMessages([]);
         setNewGroupDescription(event.target.value);
     };
     const handleSubmit = (event) => {
