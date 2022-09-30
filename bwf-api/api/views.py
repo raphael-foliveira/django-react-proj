@@ -4,7 +4,7 @@ from rest_framework import viewsets, views
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from .models import Event, Group, Member, UserProfile
+from .models import Event, BetGroup, Member, UserProfile
 from .serializers import EventSerializer, GroupFullSerializer, GroupSerializer, UserSerializer, UserProfileSerializer, MemberSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
@@ -23,38 +23,65 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     class Meta:
         model = User
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
+    queryset = BetGroup.objects.all()
     serializer_class = GroupSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
     class Meta:
-        model = Group
+        model = BetGroup
         
 
 class GroupFullViewSet(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def list(self, request):
-        groups = Group.objects.all()
-        members_of_groups = Member.objects.all()
+        groups = BetGroup.objects.all()
         serializer = GroupFullSerializer(groups, many=True)
         return Response(serializer.data)
                         
     def retrieve(self, request, pk=None):
-        group = Group.objects.get(pk=pk)
-        members = group.members.all()
+        group = BetGroup.objects.get(pk=pk)
         group_serializer = GroupFullSerializer(group)
         return Response(group_serializer.data)
     
     def create(self, request):
-        return Response(None)
-    
+        new_group = BetGroup.objects.create(
+            name=request.data["newGroupName"],
+            location=request.data["newGroupLocation"],
+            description=request.data["newGroupDescription"]
+        )
+        group_creator = User.objects.get(pk=request.data["userId"])
+        new_member = Member.objects.create(
+            user=group_creator,
+            group=new_group,
+            admin=True
+        )
+        new_group_serializer = GroupSerializer(new_group)
+        return Response({
+            "message": "New group created successfully!",
+            "new_group": new_group_serializer.data
+        })
+        
+    def destroy(self, request, pk=None):
+        deleted_group: BetGroup = BetGroup.objects.get(pk=pk)
+        membership: Member = Member.objects.get(user=request.user, group=deleted_group)
+        if membership.admin:
+            deleted_group.delete()
+            return Response({
+                "message": f"Group {deleted_group.name} deleted successfully"
+            })
+        return Response({
+            "message": "User does not have the required permission to do that."
+        })
+        
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -68,8 +95,8 @@ class EventViewSet(viewsets.ModelViewSet):
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     class Meta:
         model = Member
         
@@ -137,7 +164,7 @@ class UserJoinGroup(views.APIView):
         user_id: int = request.data.get('userId')
         group_id: int = request.data.get('groupId')
         user: User = User.objects.get(id=user_id)
-        group: Group = Group.objects.get(id=group_id)
+        group: BetGroup = BetGroup.objects.get(id=group_id)
         Member.objects.create(
             user=user,
             group=group
@@ -157,7 +184,7 @@ class userLeavegroup(views.APIView):
         user_id: int = request.data.get('userId')
         group_id: int = request.data.get('groupId')
         user: User = User.objects.get(id=user_id)
-        group: Group = Group.objects.get(id=group_id)
+        group: BetGroup = BetGroup.objects.get(id=group_id)
         relationship: Member = Member.objects.get(Q(user=user), Q(group=group))
         relationship.delete()
         return Response({

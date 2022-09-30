@@ -43,11 +43,11 @@ export default function GroupDetails() {
             {group && (
                 <div>
                     <h3>Name:</h3>
-                    <p>{group.name}</p>
+                    <p>{group["name"]}</p>
                     <h3>Location:</h3>
-                    <p>{group.location}</p>
+                    <p>{group["location"]}</p>
                     <h3>Description:</h3>
-                    <p>{group.description}</p>
+                    <p>{group["description"]}</p>
                     {group.members.length > 0 && (
                         <React.Fragment>
                             <h3>Members:</h3>

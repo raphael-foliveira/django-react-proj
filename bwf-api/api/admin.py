@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Group, Event, UserProfile, Member
+from .models import BetGroup, Event, UserProfile, Member
 
 
 @admin.register(UserProfile)
@@ -7,7 +7,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     fields = ("user", "image")
     list_display = ("user", "image")
 
-@admin.register(Group)
+@admin.register(BetGroup)
 class GroupAdmin(admin.ModelAdmin):
     fields = ('name', 'location', 'description')
     list_display = ('id', 'name', 'location', 'description')

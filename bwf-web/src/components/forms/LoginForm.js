@@ -6,11 +6,16 @@ import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import classes from "./LoginForm.module.css";
 import KeyIcon from "@mui/icons-material/Key";
-import { authorizeUser} from "../../services/user-services";
+import { authorizeUser } from "../../services/user-services";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
 
+const ButtonDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
 
+`;
 
 export default function LoginForm(props) {
     const [userName, setUserName] = useState("");
@@ -61,17 +66,17 @@ export default function LoginForm(props) {
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
             />
-            <div className={classes.button_spacing}>
+            <ButtonDiv>
                 <Button color="primary" variant="contained" type="submit">
                     Login
                 </Button>
                 <Link to={"/register"}>
-                    <Button color="primary" variant="contained">Register</Button>
+                    <Button color="primary" variant="contained">
+                        Register
+                    </Button>
                 </Link>
-            </div>
+            </ButtonDiv>
             {errors && <p>{errors}</p>}
         </form>
     );
 }
-
-

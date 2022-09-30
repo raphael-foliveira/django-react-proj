@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=255, blank=True, null=True)
 
 
-class Group(models.Model):
+class BetGroup(models.Model):
     name = models.CharField(max_length=32)
     location = models.CharField(max_length=32)
     description = models.CharField(max_length=255)
@@ -28,11 +28,11 @@ class Event(models.Model):
     score_1 = models.IntegerField(default=0)
     score_2 = models.IntegerField(default=0)
     time = models.DateTimeField()
-    group = models.ForeignKey(Group, related_name='events', on_delete=models.CASCADE)
+    group = models.ForeignKey(BetGroup, related_name='events', on_delete=models.CASCADE)
     
 
 class Member(models.Model):
-    group = models.ForeignKey(Group, related_name='members', on_delete=models.CASCADE)
+    group = models.ForeignKey(BetGroup, related_name='members', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='bet_groups', on_delete=models.CASCADE)
     admin = models.BooleanField(default=False)
     

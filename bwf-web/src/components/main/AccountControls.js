@@ -18,6 +18,10 @@ export default function AccountControls(props) {
         navigate("/account");
     };
 
+    const goToCreateGroup = () => {
+        navigate("/create-group")
+    }
+
 
     return (
         <React.Fragment>
@@ -43,6 +47,18 @@ export default function AccountControls(props) {
             >
                 Logout
             </Button>
+            <Button
+                color="primary"
+                variant="contained"
+                type="button"
+                onClick={goToCreateGroup}
+                style={{
+                    padding: "auto",
+                    marginTop: "10px"
+                }}>
+                Create Group
+            </Button>
+
         </React.Fragment>
     );
 }

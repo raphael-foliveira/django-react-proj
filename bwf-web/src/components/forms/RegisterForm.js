@@ -38,7 +38,7 @@ export default function RegisterForm(props) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={classes.register_form}>
             <Grid container spacing={6} maxWidth={"800px"}>
                 <Grid item xs={12}>
                     <h1>Register</h1>

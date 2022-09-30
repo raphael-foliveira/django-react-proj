@@ -7,6 +7,7 @@ import RegisterForm from "../forms/RegisterForm";
 import Account from "../account/Account";
 import { AuthContext } from "../../contexts/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
+import CreateGroupForm from "../forms/CreateGroupForm";
 
 export default function Main(props) {
     const [authData] = useContext(AuthContext);
@@ -31,6 +32,14 @@ export default function Main(props) {
                     element={
                         <ProtectedRoute authData={authData}>
                             <Account />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route 
+                    path="/create-group"
+                    element={
+                        <ProtectedRoute authData={authData}>
+                            <CreateGroupForm/>
                         </ProtectedRoute>
                     }
                 />

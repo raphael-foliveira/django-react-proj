@@ -1,7 +1,7 @@
-const apiEndpoint = 'http://localhost:8000/api'
+import { apiBaseEndpoint } from "./api-endpoint";
 
 export function authorizeUser(credentials) {
-    return fetch(`${apiEndpoint}/authenticate`, {
+    return fetch(`${apiBaseEndpoint}/authenticate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ export function authorizeUser(credentials) {
 }
 
 export function registerNewUser(newUserData) {
-    return fetch(`${apiEndpoint}/register`, {
+    return fetch(`${apiBaseEndpoint}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export function registerNewUser(newUserData) {
 }
 
 export function uploadAvatar(profileId, data, token) {
-    return fetch(`${apiEndpoint}/userprofiles/${profileId}/`, {
+    return fetch(`${apiBaseEndpoint}/userprofiles/${profileId}/`, {
         method: 'PUT',
         headers: {
             'Authorization': `Token ${token}`,
@@ -35,7 +35,7 @@ export function uploadAvatar(profileId, data, token) {
 }
 
 export function updateUserPassword(userId, newPassword, token) {
-    return fetch(`${apiEndpoint}/change-password/`, {
+    return fetch(`${apiBaseEndpoint}/change-password/`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -50,13 +50,13 @@ export function updateUserPassword(userId, newPassword, token) {
 }
 
 export function getUserProfile(profileId) {
-    return fetch(`${apiEndpoint}/userprofiles/${profileId}/`)
+    return fetch(`${apiBaseEndpoint}/userprofiles/${profileId}/`)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
 
 export function getUserAccountInfo(userId, token) {
-    return fetch(`${apiEndpoint}/users/${userId}`)
+    return fetch(`${apiBaseEndpoint}/users/${userId}`)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
@@ -74,7 +74,7 @@ export function removeUserFromLocalStorage() {
 }
 
 export function userJoinGroup(userId, groupId, token) {
-    return fetch(`${apiEndpoint}/join`, {
+    return fetch(`${apiBaseEndpoint}/join`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export function userJoinGroup(userId, groupId, token) {
 }
 
 export function userLeaveGroup(userId, groupId, token) {
-    return fetch(`${apiEndpoint}/leave`, {
+    return fetch(`${apiBaseEndpoint}/leave`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

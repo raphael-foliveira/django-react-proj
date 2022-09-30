@@ -1,3 +1,7 @@
 .registerFormInput {
     margin-bottom: 20px;
 }
+
+.register_form input, .register_form label {
+    color: white;
+}
