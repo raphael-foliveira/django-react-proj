@@ -45,9 +45,9 @@ export default function GroupControls(props) {
     }
 
     return (
-        <React.Fragment>
+        <>
             {groupControlButton}
             {isAdmin && <Button onClick={handleDeleteGroup}>Delete Group</Button>}
-        </React.Fragment>
+        </>
     );
 }

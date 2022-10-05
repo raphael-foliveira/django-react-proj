@@ -105,9 +105,8 @@ class CustomObtainAuthToken(ObtainAuthToken):
     
     def post(self, request, *args, **kwargs):
         response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.data['token'])
-        user = User.objects.get(id=token.user_id)
-        user_serializer = UserSerializer(user, many=False)
+        token: Token = Token.objects.get(key=response.data['token'])
+        user_serializer = UserSerializer(token.user, many=False)
         return Response({
             'token': token.key,
             'user': user_serializer.data
@@ -144,8 +143,9 @@ class ChangeUserPassword(views.APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     
-    def put(self, request):
+    def post(self, request):
         user_id = request.data.get('userId')
+        print(request.data)
         user: User = User.objects.get(id=user_id)
         user.set_password(request.data.get('newPassword'))
         user.save()

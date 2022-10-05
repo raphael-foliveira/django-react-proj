@@ -1,1 +1,0 @@
-export const apiBaseEndpoint = 'http://localhost:8000/api'

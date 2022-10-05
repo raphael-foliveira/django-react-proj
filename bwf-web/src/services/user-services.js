@@ -1,7 +1,5 @@
-import { apiBaseEndpoint } from "./api-endpoint";
-
 export function authorizeUser(credentials) {
-    return fetch(`${apiBaseEndpoint}/authenticate`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/authenticate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -12,7 +10,7 @@ export function authorizeUser(credentials) {
 }
 
 export function registerNewUser(newUserData) {
-    return fetch(`${apiBaseEndpoint}/register`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -23,7 +21,7 @@ export function registerNewUser(newUserData) {
 }
 
 export function uploadAvatar(profileId, data, token) {
-    return fetch(`${apiBaseEndpoint}/userprofiles/${profileId}/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/userprofiles/${profileId}`, {
         method: 'PUT',
         headers: {
             'Authorization': `Token ${token}`,
@@ -35,8 +33,8 @@ export function uploadAvatar(profileId, data, token) {
 }
 
 export function updateUserPassword(userId, newPassword, token) {
-    return fetch(`${apiBaseEndpoint}/change-password/`, {
-        method: 'PUT',
+    return fetch(`${process.env.REACT_APP_API_URL}/change-password`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`
@@ -50,13 +48,13 @@ export function updateUserPassword(userId, newPassword, token) {
 }
 
 export function getUserProfile(profileId) {
-    return fetch(`${apiBaseEndpoint}/userprofiles/${profileId}/`)
+    return fetch(`${process.env.REACT_APP_API_URL}/userprofiles/${profileId}`)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
 
 export function getUserAccountInfo(userId, token) {
-    return fetch(`${apiBaseEndpoint}/users/${userId}`)
+    return fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
@@ -74,7 +72,7 @@ export function removeUserFromLocalStorage() {
 }
 
 export function userJoinGroup(userId, groupId, token) {
-    return fetch(`${apiBaseEndpoint}/join`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/join`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -89,7 +87,7 @@ export function userJoinGroup(userId, groupId, token) {
 }
 
 export function userLeaveGroup(userId, groupId, token) {
-    return fetch(`${apiBaseEndpoint}/leave`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/leave`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

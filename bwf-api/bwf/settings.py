@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,14 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^kx%cg!zilvg)b3=+02wq%j75q)-^ueec98b)nd*7ir3*wwd3j'
+SECRET_KEY = config('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -74,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bwf.wsgi.application'
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"
+    config('CORS_ALLOWED_ORIGINS')
 ]
 
 # Database

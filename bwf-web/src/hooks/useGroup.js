@@ -1,10 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { getGroup } from "../services/group-services";
-import { AuthContext } from "../contexts/AuthContext";
 
 function useGroup(groupId) {
-
-    const [authData] = useContext(AuthContext);
 
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);

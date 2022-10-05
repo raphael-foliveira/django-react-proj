@@ -12,13 +12,13 @@ export default function Member(props) {
     }, []);
 
     return (
-        <React.Fragment>
+        <>
             {member && (
-                <React.Fragment>
+                <>
                     <Avatar src={member.profile?.image} />
                     <p>{member.username}</p>
-                </React.Fragment>
+                </>
             )}
-        </React.Fragment>
+        </>
     );
 }

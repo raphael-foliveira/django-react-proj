@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import useGroup from "../../hooks/useGroup";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -7,7 +7,7 @@ import { formatDate, formatTime } from "../../services/datetime-services";
 import { userJoinGroup, userLeaveGroup } from "../../services/user-services";
 import GroupControls from "./GroupControls";
 import { AuthContext } from "../../contexts/AuthContext";
-import Member from "./Member";
+const Member = React.lazy(() => import("./Member"));
 
 export default function GroupDetails() {
     const { id } = useParams();
@@ -39,7 +39,7 @@ export default function GroupDetails() {
     if (loading) return <h3>Loading...</h3>;
 
     return (
-        <div>
+        <>
             {group && (
                 <div>
                     <h3>Name:</h3>
@@ -49,20 +49,22 @@ export default function GroupDetails() {
                     <h3>Description:</h3>
                     <p>{group["description"]}</p>
                     {group.members.length > 0 && (
-                        <React.Fragment>
+                        <>
                             <h3>Members:</h3>
                             <ul>
                                 {group.members.map((member) => {
                                     return (
-                                        <Member key={member.user.id} userId={member.user.id} token={authData.token} />
+                                        <Suspense key={member.user.id} fallback={<div>Loading...</div>}>
+                                            <Member key={member.user.id} userId={member.user.id} token={authData.token} />
+                                        </Suspense>
                                     );
                                 })}
                             </ul>
-                        </React.Fragment>
+                        </>
                     )}
 
                     {group.events.length > 0 && (
-                        <React.Fragment>
+                        <>
                             <h3>Events:</h3>
                             <ul>
                                 {group.events.map((event) => {
@@ -81,11 +83,11 @@ export default function GroupDetails() {
                                     );
                                 })}
                             </ul>
-                        </React.Fragment>
+                        </>
                     )}
                     <GroupControls joinGroup={joinGroup} leaveGroup={leaveGroup} groupData={groupData} />
                 </div>
             )}
-        </div>
+        </>
     );
 }

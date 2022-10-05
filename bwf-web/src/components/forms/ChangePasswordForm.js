@@ -25,7 +25,7 @@ export default function ChangePasswordForm(props) {
             NotificationManager.warning("Passwords do not match")
             return;
         }
-        updateUserPassword(authData.user.id, newPassword, authData.token).then((data) => console.log(data));
+        updateUserPassword(authData.user.id, newPassword, authData.token).then(data => console.log(data));
         NotificationManager.success("Password changed successfully")
         navigate("/");
     };

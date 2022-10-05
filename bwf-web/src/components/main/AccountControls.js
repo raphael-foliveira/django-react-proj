@@ -24,7 +24,7 @@ export default function AccountControls(props) {
 
 
     return (
-        <React.Fragment>
+        <>
             <User userName={authData.user.username} />
             <Button
                 color="primary"
@@ -59,6 +59,6 @@ export default function AccountControls(props) {
                 Create Group
             </Button>
 
-        </React.Fragment>
+        </>
     );
 }
